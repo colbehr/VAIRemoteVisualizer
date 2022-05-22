@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<GridPane fx:id="layout" style="-fx-background-color: GREEN;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vai.uxremotecontrol.Remote">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <AnchorPane id="pane" prefHeight="2000.0" prefWidth="2000.0" stylesheets="@style.css">
+         <children>
+            <Circle fx:id="button1" fill="DODGERBLUE" layoutX="100.0" layoutY="176.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fx:id="button2" fill="DODGERBLUE" layoutX="170.0" layoutY="176.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" />
+         </children>
+      </AnchorPane>
+   </children>
+</GridPane>
