@@ -40,15 +40,29 @@ public class Remote implements NativeMouseListener, NativeKeyListener {
         //mouse 1 is button 1 mouse 2 is button 2
         if (e.getButton() == 1) {
             button1On();
-            setTimeout(() -> mainBackground(), 100);
+//            setTimeout(() -> mainBackground(), 100);
         }else if (e.getButton() == 2){
             button2On();
-            setTimeout(() -> mainBackground(), 100);
+//            setTimeout(() -> mainBackground(), 100);
         }
     }
 
+    //mouse events
+    public void nativeMouseReleased(NativeMouseEvent e) {
+        //mouse 1 is button 1 mouse 2 is button 2
+        if (e.getButton() == 1) {
+            mainBackground();
+//            setTimeout(() -> mainBackground(), 100);
+
+        }else if (e.getButton() == 2){
+            mainBackground();
+//            setTimeout(() -> mainBackground(), 100);
+        }
+    }
+
+
     //keyboard events
-    public void nativeKeyTyped(NativeKeyEvent e) {
+    public void nativeKeyPressed(NativeKeyEvent e) {
         System.out.println("Key Typed: " + e.getRawCode());
         /* ------
         Utility buttons
@@ -80,37 +94,52 @@ public class Remote implements NativeMouseListener, NativeKeyListener {
         //bind mic to space
         if(e.getRawCode() == 32){
             micButtonOn();
-            setTimeout(() -> mainBackground(), 100);
+//            setTimeout(() -> mainBackground(), 100);
         }
         //bind sensors to s
         if(e.getRawCode() == 83){
             sensorsOn();
-            setTimeout(() -> mainBackground(), 100);
+//            setTimeout(() -> mainBackground(), 100);
+        }
+    }
+    //keyboard events
+    public void nativeKeyReleased(NativeKeyEvent e) {
+        System.out.println("Key Released: " + e.getRawCode());
+        /* ------
+        Remote buttons
+        ------ */
+
+        //bind mic to space
+        if(e.getRawCode() == 32){
+            mainBackground();
+        }
+        //bind sensors to s
+        if(e.getRawCode() == 83){
+            mainBackground();
         }
     }
 
-
     private void mainBackground() {
-        String image = Main.class.getResource("remote.png").toExternalForm();
+        String image = Main.class.getResource("vai.jpg").toExternalForm();
         pane.setStyle("-fx-background-image: url(" + image + " )");
     }
     private void button2On() {
-        String image = Main.class.getResource("remote2.png").toExternalForm();
+        String image = Main.class.getResource("vai-home.jpg").toExternalForm();
         pane.setStyle("-fx-background-image: url(" + image + " )");
     }
 
     private void button1On() {
-        String image = Main.class.getResource("remote2.png").toExternalForm();
+        String image = Main.class.getResource("vai-ok.jpg").toExternalForm();
         pane.setStyle("-fx-background-image: url(" + image + " )");
     }
 
     private void micButtonOn() {
-        String image = Main.class.getResource("remote2.png").toExternalForm();
+        String image = Main.class.getResource("vai-mic.jpg").toExternalForm();
         pane.setStyle("-fx-background-image: url(" + image + " )");
     }
 
     private void sensorsOn() {
-        String image = Main.class.getResource("remote2.png").toExternalForm();
+        String image = Main.class.getResource("vai.jpg").toExternalForm();
         pane.setStyle("-fx-background-image: url(" + image + " )");
     }
 
