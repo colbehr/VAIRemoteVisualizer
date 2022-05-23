@@ -2,39 +2,24 @@ package com.vai.uxremotecontrol;
 
 import com.github.kwhat.jnativehook.GlobalScreen;
 import com.github.kwhat.jnativehook.NativeHookException;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 import com.github.kwhat.jnativehook.mouse.NativeMouseEvent;
 import com.github.kwhat.jnativehook.mouse.NativeMouseListener;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
-import javafx.geometry.VPos;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 import java.io.IOException;
 
 
-public class Remote implements NativeMouseListener {
+public class Remote implements NativeMouseListener, NativeKeyListener {
     @FXML
-    private Circle button1;
-    @FXML
-    private Circle button2;
-    @FXML
-    private GridPane layout;
-    @FXML
-    private AnchorPane pane;
+    private GridPane pane;
 
     @FXML
-    protected void onButton1On() {
-        button1.setFill(Color.AQUA);
-    }
-    @FXML
-    protected void onButton1Off() {
-        button1.setFill(Color.DODGERBLUE);
-    }
-    @FXML
     private void initialize() throws IOException {
+
         try {
             GlobalScreen.registerNativeHook();
         }
@@ -46,32 +31,87 @@ public class Remote implements NativeMouseListener {
         }
 
         // Add the appropriate listeners.
+        GlobalScreen.addNativeKeyListener(this);
         GlobalScreen.addNativeMouseListener(this);
-        layout.getRowConstraints().add(new RowConstraints(-1, -1, -1, Priority.ALWAYS, VPos.CENTER, false));
-        layout.getColumnConstraints().add(new ColumnConstraints(-1, -1, -1, Priority.ALWAYS, HPos.CENTER, false));
     }
 
-    public void nativeMouseClicked(NativeMouseEvent e) {
+    //mouse events
+    public void nativeMousePressed(NativeMouseEvent e) {
+        //mouse 1 is button 1 mouse 2 is button 2
         if (e.getButton() == 1) {
-            onButton1On();
-            setTimeout(() -> onButton1Off(), 100);
-        }else{
-            onButton2On();
-            setTimeout(() -> onButton2Off(), 100);
+            button1On();
+            setTimeout(() -> mainBackground(), 100);
+        }else if (e.getButton() == 2){
+            button2On();
+            setTimeout(() -> mainBackground(), 100);
         }
-        System.out.println("Mouse Button "+ e.getButton()+" Clicked: " + e.getClickCount() );
     }
 
-    private void onButton2Off() {
+    //keyboard events
+    public void nativeKeyTyped(NativeKeyEvent e) {
+        System.out.println("Key Typed: " + e.getRawCode());
+        /* ------
+        Utility buttons
+        ------ */
+
+        //bind x to close
+        if(e.getRawCode() == 88){
+            System.exit(1);
+        }
+
+        //bind + and - (not numpad) to resize screen
+        if(e.getRawCode() == 187){
+            System.out.println("Scale Screen Up");
+            pane.setPrefWidth(pane.getWidth()*1.3);
+            pane.setPrefHeight(pane.getWidth()*1.3);
+            pane.getScene().getWindow().setHeight(pane.getHeight()*1.3);
+            pane.getScene().getWindow().setWidth(pane.getWidth()*1.3);
+        } else if(e.getRawCode() == 189){
+            System.out.println("Scale Screen Down");
+            pane.setPrefWidth(pane.getWidth()/1.3);
+            pane.setPrefHeight(pane.getWidth()/1.3);
+            pane.getScene().getWindow().setHeight(pane.getHeight()/1.3);
+            pane.getScene().getWindow().setWidth(pane.getWidth()/1.3);
+        }
+        /* ------
+        Remote buttons
+        ------ */
+
+        //bind mic to space
+        if(e.getRawCode() == 32){
+            micButtonOn();
+            setTimeout(() -> mainBackground(), 100);
+        }
+        //bind sensors to s
+        if(e.getRawCode() == 83){
+            sensorsOn();
+            setTimeout(() -> mainBackground(), 100);
+        }
+    }
+
+
+    private void mainBackground() {
         String image = Main.class.getResource("remote.png").toExternalForm();
         pane.setStyle("-fx-background-image: url(" + image + " )");
-        button2.setFill(Color.DODGERBLUE);
     }
-
-    private void onButton2On() {
+    private void button2On() {
         String image = Main.class.getResource("remote2.png").toExternalForm();
         pane.setStyle("-fx-background-image: url(" + image + " )");
-        button2.setFill(Color.AQUA);
+    }
+
+    private void button1On() {
+        String image = Main.class.getResource("remote2.png").toExternalForm();
+        pane.setStyle("-fx-background-image: url(" + image + " )");
+    }
+
+    private void micButtonOn() {
+        String image = Main.class.getResource("remote2.png").toExternalForm();
+        pane.setStyle("-fx-background-image: url(" + image + " )");
+    }
+
+    private void sensorsOn() {
+        String image = Main.class.getResource("remote2.png").toExternalForm();
+        pane.setStyle("-fx-background-image: url(" + image + " )");
     }
 
     public static void setTimeout(Runnable runnable, int delay){
@@ -86,12 +126,5 @@ public class Remote implements NativeMouseListener {
         }).start();
     }
 
-    public static void MakeStretchy(GridPane root) {
-        ColumnConstraints col = new ColumnConstraints();
-        col.setPercentWidth(100);
-        root.getColumnConstraints().add(col);
-        RowConstraints row = new RowConstraints();
-        row.setPercentHeight(100);
-        root.getRowConstraints().add(row);
-    }
+
 }
