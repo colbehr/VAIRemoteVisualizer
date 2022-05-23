@@ -14,7 +14,11 @@ The visualizer can display button presses globally, for example, if the visualiz
 - The microphone button can be visualized using the `Space` key.
 - If needed the program can be resized using the `+` and `-` keys.
 
-![VAIRemoteVisualizer](/src/main/resources/com/vai/uxremotecontrol/vai.jpg)
+
+
+|  <img src="/src/main/resources/com/vai/uxremotecontrol/vai.jpg" data-canonical-src="/src/main/resources/com/vai/uxremotecontrol/vai.jpg" width="250" /> |  <img src="/src/main/resources/com/vai/uxremotecontrol/vai-home.jpg" data-canonical-src="/src/main/resources/com/vai/uxremotecontrol/vai-home.jpg" width="250" /> |  <img src="/src/main/resources/com/vai/uxremotecontrol/vai-ok.jpg" data-canonical-src="/src/main/resources/com/vai/uxremotecontrol/vai-ok.jpg" width="250" /> |  <img src="/src/main/resources/com/vai/uxremotecontrol/vai-mic.jpg" data-canonical-src="/src/main/resources/com/vai/uxremotecontrol/vai-mic.jpg" width="250" /> |
+| ------------ | ------------ | ------------ | ------------ |
+
 
 ## Development setup
 
